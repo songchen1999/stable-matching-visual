@@ -1,35 +1,45 @@
 import logo from './logo.svg';
 import './App.css';
+import Man from './Man';
+import React, { useState } from 'react';
 
 function App() {
+  const [ManData,SetManData] = useState(
+    [
+      ["Alex",["Felicia","Grace","Helen", "Ivy", "Judy"]],
+      ["Bob",["Felicia","Grace","Helen", "Ivy", "Judy"]],
+      ["Chad",["Felicia","Grace","Helen", "Ivy", "Judy"]],
+      ["Darius",["Felicia","Grace","Helen", "Ivy", "Judy"]],
+      ["Eli",["Felicia","Grace","Helen", "Ivy", "Judy"]]
+    ]
+  )
+
   return (
     <div className="App">
-      <div className="Man">
-          <div>
-          Alex 
-          <ul className="PreferList">
-            <li style={{display:"inline"}}>F</li>
-            <li style={{display:"inline"}}>G</li>
-            <li style={{display:"inline"}}>H</li>
-            <li style={{display:"inline"}}>I</li>
-            <li style={{display:"inline"}}>J</li>
-          </ul>
-          </div>
-          <div>Bob</div>
-          <div>Chad</div>
-          <div>Darius</div>
-          <div>Eli</div>
-          <div>Proposer</div>
+      <div className="Top">
+        <div className="Men">
+            {ManData.map(e=>(<Man name={e[0]} preferences={e[1]}/>))}
+        </div>
+        
+        <div className="Women">
+            <div>Felicia</div>
+            <div>Grace</div>
+            <div>Helen</div>
+            <div>Ivy</div>
+            <div>Judy</div>
+            <div>Proposer</div>
+        </div>
       </div>
-      
-      <div className="Woman">
-          <div>Felicia</div>
-          <div>Grace</div>
-          <div>Helen</div>
-          <div>Ivy</div>
-          <div>Judy</div>
-          <div>Proposer</div>
+
+      <div className="bottom">
+        <div className="Buttons">
+          <button type="button">Men propose</button>
+          <button type="button">Women propose</button>
+        </div>
+
+
       </div>
+
     </div>
   );
 }
