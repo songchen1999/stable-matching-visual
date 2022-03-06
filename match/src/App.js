@@ -6,21 +6,21 @@ import React, { useState } from 'react';
 function App() {
   const [ManData,SetManData] = useState(
     [
-      ["Alex",["Felicia","Grace","Helen", "Ivy", "Judy"]],
-      ["Bob",["Felicia","Grace","Helen", "Ivy", "Judy"]],
-      ["Chad",["Felicia","Grace","Helen", "Ivy", "Judy"]],
-      ["Darius",["Felicia","Grace","Helen", "Ivy", "Judy"]],
-      ["Eli",["Felicia","Grace","Helen", "Ivy", "Judy"]]
+      ["Alex",["Felicia","Grace","Helen", "Ivy", "Judy"],false],
+      ["Bob",["Felicia","Grace","Helen", "Ivy", "Judy"],false],
+      ["Chad",["Felicia","Grace","Helen", "Ivy", "Judy"],false],
+      ["Darius",["Felicia","Grace","Helen", "Ivy", "Judy"],false],
+      ["Eli",["Felicia","Grace","Helen", "Ivy", "Judy"],false]
     ]
   )
 
   const [WomanData,SetWomanData] = useState(
     [
-      ["Felicia",["Alex","Bob","Chad","Darius","Eli"]],
-      ["Grace",["Alex","Bob","Chad","Darius","Eli"]],
-      ["Helen",["Alex","Bob","Chad","Darius","Eli"]], 
-      ["Ivy",["Alex","Bob","Chad","Darius","Eli"]], 
-      ["Judy",["Alex","Bob","Chad","Darius","Eli"]]]
+      ["Felicia",["Alex","Bob","Chad","Darius","Eli"],false],
+      ["Grace",["Alex","Bob","Chad","Darius","Eli"],false],
+      ["Helen",["Alex","Bob","Chad","Darius","Eli"],false], 
+      ["Ivy",["Alex","Bob","Chad","Darius","Eli"],false], 
+      ["Judy",["Alex","Bob","Chad","Darius","Eli"],false]]
   )
   
   // remove a person from a preferList
@@ -36,13 +36,50 @@ function App() {
   }
 
   // click at a name and allow selection of new prefers
-  function startSelectClick(){
+  function startSelectSwitch(isMan, addTo){
 
+    const nData = ManData.map(e=>[e[0],e[1],addTo==e[0]?true:false])
+    SetManData(nData)
+    const nData2 = WomanData.map(e=>[e[0],e[1],addTo==e[0]?true:false])
+    SetWomanData(nData2)
+    
   }
 
   // click at a name and add it to a preference list
-  function clickAdd(){
+  function clickAdd(add){
 
+    const nData = ManData.map(e=>[e[0]
+        ,e[1].filter(
+
+              a=>a!=add || !e[2]
+          
+            )
+        ,e[2]]
+        )
+    
+    for(const arr of nData){
+      if(arr[2]){
+        arr[1].push(add)
+      }
+    }
+    SetManData(nData)
+
+    const nData2 = WomanData.map(e=>[e[0]
+      ,e[1].filter(
+
+        a=>a!=add || !e[2]
+        
+          )
+      ,e[2]]
+      )
+  
+    for(const arr of nData2){
+      if(arr[2]){
+        arr[1].push(add)
+      }
+    }
+    SetWomanData(nData2)
+    
   }
 
 
@@ -51,11 +88,11 @@ function App() {
     <div className="App">
       <div className="Top">
         <div className="Men">
-            {ManData.map(e=>(<Human name={e[0]} isMan={true} listRemoveClick={preferClick} preferences={e[1]}/>))}
+            {ManData.map(e=>(<Human name={e[0]} isMan={true} clickAdd={clickAdd} addSwitch= {startSelectSwitch} listRemoveClick={preferClick} preferences={e[1]}/>))}
         </div>
         
         <div className="Women">
-            {WomanData.map(e=>(<Human name={e[0]} isMan={false} listRemoveClick={preferClick} preferences={e[1]}/>))}
+            {WomanData.map(e=>(<Human name={e[0]} isMan={false} clickAdd={clickAdd} addSwitch= {startSelectSwitch} listRemoveClick={preferClick} preferences={e[1]}/>))}
         </div>
       </div>
 

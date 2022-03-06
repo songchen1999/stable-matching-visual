@@ -18,6 +18,11 @@ button {
   
 }
 
+.plus {
+  width: 1em;
+  height: 1em;
+}
+
 
 .Men {
   background-color: rgb(0, 174, 255);
