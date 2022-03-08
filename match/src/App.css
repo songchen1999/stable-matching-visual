@@ -1,22 +1,28 @@
 .App {
   text-align: center;
+
   height: 100vh;
+
   background-color: black;
 
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+
 }
 
-.Top {
-  height: 70%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas: "MAN WOMAN"
-}
+
 
 button {
   width: 13em;
-  margin: 1vw;
-  
 }
+
+.bottom {
+  grid-area: 5 / 1 / 6 / 3;
+}
+
 
 .plus {
   width: 1em;
@@ -30,7 +36,7 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  grid-area: MAN;
+  grid-area: 1 / 1 / 5 / 2;
 }
 
 .Women {
@@ -40,7 +46,7 @@ button {
   flex-direction: column;
   justify-content: space-around;
   color: wheat;
-  grid-area: WOMAN;
+  grid-area: 1 / 2 / 5 / 3;
 }
 
 .PreferList {

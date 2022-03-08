@@ -86,7 +86,7 @@ function App() {
 
   return (
     <div className="App">
-      <div className="Top">
+
         <div className="Men">
             {ManData.map(e=>(<Human name={e[0]} isMan={true} clickAdd={clickAdd} addSwitch= {startSelectSwitch} listRemoveClick={preferClick} preferences={e[1]}/>))}
         </div>
@@ -94,7 +94,7 @@ function App() {
         <div className="Women">
             {WomanData.map(e=>(<Human name={e[0]} isMan={false} clickAdd={clickAdd} addSwitch= {startSelectSwitch} listRemoveClick={preferClick} preferences={e[1]}/>))}
         </div>
-      </div>
+
 
       <div className="bottom">
         <div className="Buttons">
