@@ -136,8 +136,9 @@ function App() {
         await delay(1000);
 
         // set the current proposer
-
+        // remove the proposed from previous propser
         SetProposer(Man4[0])
+        SetProposed("")
 
         // man's current partner
         let paired = Man4[3]
@@ -193,7 +194,7 @@ function App() {
                     }
                   }
                   else {
-                    console.log(finished)
+                    console.log(finished,oldP)
                     finished++
                   }
 
@@ -221,11 +222,11 @@ function App() {
     <div className="App">
 
         <div className="Men">
-            {ManData.map(e=>(<Human name={e[0]} isMan={true} clickAdd={clickAdd} addSwitch= {startSelectSwitch} listRemoveClick={preferClick} preferences={e[1]} pair={e[3]}/>))}
+            {ManData.map(e=>(<Human Proposed={Proposed} Proposer={Proposer} name={e[0]} isMan={true} clickAdd={clickAdd} addSwitch= {startSelectSwitch} listRemoveClick={preferClick} preferences={e[1]} pair={e[3]}/>))}
         </div>
         
         <div className="Women">
-            {WomanData.map(e=>(<Human name={e[0]} isMan={false} clickAdd={clickAdd} addSwitch= {startSelectSwitch} listRemoveClick={preferClick} preferences={e[1]} pair={e[3]}/>))}
+            {WomanData.map(e=>(<Human Proposed={Proposed} Proposer={Proposer} name={e[0]} isMan={false} clickAdd={clickAdd} addSwitch= {startSelectSwitch} listRemoveClick={preferClick} preferences={e[1]} pair={e[3]}/>))}
         </div>
 
 
@@ -235,7 +236,7 @@ function App() {
           <button type="button">Women propose</button>
         </div>
 
-        <div className='Situation'> {Proposer+" "+Proposed}</div>
+        <div className='Situation'> {Proposer+" proposes to "+Proposed}</div>
 
 
       </div>
