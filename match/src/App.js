@@ -118,14 +118,15 @@ function App() {
           continue
         }
 
-        // man name
-        let name = Man4[0]
-        console.log(name)
-        // man preference list
-        let list = Man4[1]
         // man's current partner
         let paired = Man4[3]
-        console.log(paired)
+
+        // man name
+        let name = Man4[0]
+        console.log(name,paired)
+        // man preference list
+        let list = Man4[1]
+
 
         let found =  false
         // try proposing to women in the preference list
@@ -138,6 +139,8 @@ function App() {
             SetWomanData(WomanDataCopy)
             break
           }
+
+          console.log(WomanName)
 
           
           // find the woman he is proposing to
@@ -193,11 +196,11 @@ function App() {
     <div className="App">
 
         <div className="Men">
-            {ManData.map(e=>(<Human name={e[0]} isMan={true} clickAdd={clickAdd} addSwitch= {startSelectSwitch} listRemoveClick={preferClick} preferences={e[1]}/>))}
+            {ManData.map(e=>(<Human name={e[0]} isMan={true} clickAdd={clickAdd} addSwitch= {startSelectSwitch} listRemoveClick={preferClick} preferences={e[1]} pair={e[3]}/>))}
         </div>
         
         <div className="Women">
-            {WomanData.map(e=>(<Human name={e[0]} isMan={false} clickAdd={clickAdd} addSwitch= {startSelectSwitch} listRemoveClick={preferClick} preferences={e[1]}/>))}
+            {WomanData.map(e=>(<Human name={e[0]} isMan={false} clickAdd={clickAdd} addSwitch= {startSelectSwitch} listRemoveClick={preferClick} preferences={e[1]} pair={e[3]}/>))}
         </div>
 
 
