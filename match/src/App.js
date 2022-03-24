@@ -6,21 +6,21 @@ import React, { useState } from 'react';
 function App() {
   const [ManData,SetManData] = useState(
     [
-      ["Alex",["Felicia","Grace","Helen", "Ivy", "Judy"],false],
-      ["Bob",["Felicia","Grace","Helen", "Ivy", "Judy"],false],
-      ["Chad",["Felicia","Grace","Helen", "Ivy", "Judy"],false],
-      ["Darius",["Felicia","Grace","Helen", "Ivy", "Judy"],false],
-      ["Eli",["Felicia","Grace","Helen", "Ivy", "Judy"],false]
+      ["Alex",["Felicia","Grace","Helen", "Ivy", "Judy"],false,""],
+      ["Bob",["Felicia","Grace","Helen", "Ivy", "Judy"],false,""],
+      ["Chad",["Felicia","Grace","Helen", "Ivy", "Judy"],false,""],
+      ["Darius",["Felicia","Grace","Helen", "Ivy", "Judy"],false,""],
+      ["Eli",["Felicia","Grace","Helen", "Ivy", "Judy"],false,""]
     ]
   )
 
   const [WomanData,SetWomanData] = useState(
     [
-      ["Felicia",["Alex","Bob","Chad","Darius","Eli"],false],
-      ["Grace",["Alex","Bob","Chad","Darius","Eli"],false],
-      ["Helen",["Alex","Bob","Chad","Darius","Eli"],false], 
-      ["Ivy",["Alex","Bob","Chad","Darius","Eli"],false], 
-      ["Judy",["Alex","Bob","Chad","Darius","Eli"],false]]
+      ["Felicia",["Alex","Bob","Chad","Darius","Eli"],false,""],
+      ["Grace",["Alex","Bob","Chad","Darius","Eli"],false,""],
+      ["Helen",["Alex","Bob","Chad","Darius","Eli"],false,""], 
+      ["Ivy",["Alex","Bob","Chad","Darius","Eli"],false,""], 
+      ["Judy",["Alex","Bob","Chad","Darius","Eli"],false,""]]
   )
   
   // remove a person from a preferList
@@ -82,6 +82,36 @@ function App() {
     
   }
 
+  function menPropose(){
+    for(let Man4 of ManData){
+      let name = Man4[0]
+      let list = Man4[1]
+      let paired = Man4[3]
+
+      for(let WomanName of list){
+
+        for(const Woman of WomanData){
+          if (Woman[0]==WomanName){
+            for(let m of Woman[1]){
+              if(m==Woman[3]){
+                Woman[3] = m
+                break
+              }
+              else if(m==name){
+                Woman[3] = name
+                paired = WomanName
+                Man4[3] = paired
+                break
+              }
+            }
+          }
+        }
+
+      }
+
+    }
+  }
+
 
 
   return (
@@ -98,7 +128,7 @@ function App() {
 
       <div className="bottom">
         <div className="Buttons">
-          <button type="button">Men propose</button>
+          <button type="button" onClick={e=>{menPropose()}}>Men propose</button>
           <button type="button">Women propose</button>
         </div>
 
