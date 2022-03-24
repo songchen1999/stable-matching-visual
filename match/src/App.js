@@ -89,52 +89,82 @@ function App() {
 
     const WomanDataCopy = WomanData.map(e=>(e.map(a=>a)))
 
-    for(let Man4 of ManDataCopy){
-      // man name
-      let name = Man4[0]
-      // man preference list
-      let list = Man4[1]
-      // man's current partner
-      let paired = Man4[3]
+    let finished = 0
 
-      let found =  false
-      // try proposing to women in the preference list
-      for(let WomanName of list){
+    while (finished<ManDataCopy.length){
 
-        // if found exit
-        if (found){
+      console.log("loop")
 
-          SetManData(ManDataCopy)
-          SetWomanData(WomanDataCopy)
-          break
+
+
+      for(let Man4 of ManDataCopy){
+        // continue to next if paired
+        if (Man4[3]!=""){
+          continue
         }
-        
-        // find the woman he is proposing to
-        for(const Woman of WomanDataCopy){
-          // find the woman
-          if (Woman[0]==WomanName){
-            // find out if he is higher in the list than the woman's current partner
-            for(let m of Woman[1]){
-              // he is not 
-              if(m==Woman[3]){
-                Woman[3] = m
-                break
-              }
-              // he is
-              else if(m==name){
-                Woman[3] = name
-                paired = WomanName
-                Man4[3] = paired
-                found = true
-                break
-              }
-            }
+
+        // man name
+        let name = Man4[0]
+        // man preference list
+        let list = Man4[1]
+        // man's current partner
+        let paired = Man4[3]
+
+        let found =  false
+        // try proposing to women in the preference list
+        for(let WomanName of list){
+
+          // if found exit
+          if (found){
+
+            SetManData(ManDataCopy)
+            SetWomanData(WomanDataCopy)
             break
           }
+          
+          // find the woman he is proposing to
+          for(const Woman of WomanDataCopy){
+            // find the woman
+            if (Woman[0]==WomanName){
+              // find out if he is higher in the list than the woman's current partner
+              for(let m of Woman[1]){
+                // he is not 
+                if(m==Woman[3]){
+                  Woman[3] = m
+                  break
+                }
+                // he is
+                else if(m==name){
+                  // the old partner is kicked out
+                  let oldP = Woman[3]
+                  // find and remove the old partner's partner
+                  if (oldP!=""){
+                    for (let Man44 of ManDataCopy) {
+                      if (Man44[0] == oldP){
+                        Man44[3] = ""
+                        break
+                      }
+                    }
+                  }
+                  else {
+                    finished++
+                  }
+
+
+                  Woman[3] = name
+                  paired = WomanName
+                  Man4[3] = paired
+                  found = true
+                  break
+                }
+              }
+              break
+            }
+          }
+
         }
 
       }
-
     }
   }
 
