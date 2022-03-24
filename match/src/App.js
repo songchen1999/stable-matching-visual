@@ -26,11 +26,11 @@ function App() {
   // remove a person from a preferList
   function preferClick(isMan,removeFrom,remove){
     if (isMan){
-      const nData = ManData.map(e=>[e[0],e[1].filter((a)=>e[0]!=removeFrom || ( e[0]==removeFrom && a!=remove)),e[3]])
+      const nData = ManData.map(e=>[e[0],e[1].filter((a)=>e[0]!=removeFrom || ( e[0]==removeFrom && a!=remove)),""])
       SetManData(nData)
     }
     else {
-      const nData = WomanData.map(e=>[e[0],e[1].filter((a)=>e[0]!=removeFrom || ( e[0]==removeFrom && a!=remove)),e[3]])
+      const nData = WomanData.map(e=>[e[0],e[1].filter((a)=>e[0]!=removeFrom || ( e[0]==removeFrom && a!=remove)),""])
       SetWomanData(nData)
     }
   }
@@ -54,7 +54,7 @@ function App() {
               a=>a!=add || !e[2]
           
             )
-        ,e[2],e[3]]
+        ,e[2],""]
         )
     
     for(const arr of nData){
@@ -70,7 +70,7 @@ function App() {
         a=>a!=add || !e[2]
         
           )
-      ,e[2],e[3]]
+      ,e[2],""]
       )
   
     for(const arr of nData2){
@@ -85,6 +85,17 @@ function App() {
   function menPropose(){
 
 
+    // check if all partnered
+
+    let c = 0
+    for(const d of ManData) {
+      if(d[3]!=""){
+        c++
+      }
+    }
+    if(c==ManData.length){
+      return
+    }
 
 
     // start with each man
