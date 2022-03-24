@@ -4,6 +4,11 @@ import Human from './Human';
 import React, { useState } from 'react';
 
 function App() {
+
+
+  const [Proposer,SetProposer] = useState("")
+  const [Proposed,SetProposed] = useState("")
+
   const [ManData,SetManData] = useState(
     [
       ["Alex",["Felicia","Grace","Helen", "Ivy", "Judy"],false,""],
@@ -82,7 +87,14 @@ function App() {
     
   }
 
-  function menPropose(){
+
+  function delay(milliseconds){
+    return new Promise(resolve => {
+        setTimeout(resolve, milliseconds);
+    });
+  }
+
+  async function menPropose(){
 
 
     // check if all partnered
@@ -113,10 +125,19 @@ function App() {
 
 
       for(let Man4 of ManDataCopy){
+
+
         // continue to next if paired
         if (Man4[3]!=""){
           continue
         }
+
+        // pause for one second
+        await delay(1000);
+
+        // set the current proposer
+
+        SetProposer(Man4[0])
 
         // man's current partner
         let paired = Man4[3]
@@ -140,6 +161,10 @@ function App() {
             break
           }
 
+          // pause for one second
+          await delay(1000);
+
+          SetProposed(WomanName)
           console.log(WomanName)
 
           
@@ -209,6 +234,8 @@ function App() {
           <button type="button" onClick={e=>{menPropose()}}>Men propose</button>
           <button type="button">Women propose</button>
         </div>
+
+        <div className='Situation'> {Proposer+" "+Proposed}</div>
 
 
       </div>
