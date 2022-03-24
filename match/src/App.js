@@ -26,11 +26,11 @@ function App() {
   // remove a person from a preferList
   function preferClick(isMan,removeFrom,remove){
     if (isMan){
-      const nData = ManData.map(e=>[e[0],e[1].filter((a)=>e[0]!=removeFrom || ( e[0]==removeFrom && a!=remove))])
+      const nData = ManData.map(e=>[e[0],e[1].filter((a)=>e[0]!=removeFrom || ( e[0]==removeFrom && a!=remove)),e[3]])
       SetManData(nData)
     }
     else {
-      const nData = WomanData.map(e=>[e[0],e[1].filter((a)=>e[0]!=removeFrom || ( e[0]==removeFrom && a!=remove))])
+      const nData = WomanData.map(e=>[e[0],e[1].filter((a)=>e[0]!=removeFrom || ( e[0]==removeFrom && a!=remove)),e[3]])
       SetWomanData(nData)
     }
   }
@@ -38,9 +38,9 @@ function App() {
   // click at a name and allow selection of new prefers
   function startSelectSwitch(isMan, addTo){
 
-    const nData = ManData.map(e=>[e[0],e[1],addTo==e[0]?true:false])
+    const nData = ManData.map(e=>[e[0],e[1],addTo==e[0]?true:false,e[3]])
     SetManData(nData)
-    const nData2 = WomanData.map(e=>[e[0],e[1],addTo==e[0]?true:false])
+    const nData2 = WomanData.map(e=>[e[0],e[1],addTo==e[0]?true:false,e[3]])
     SetWomanData(nData2)
     
   }
@@ -54,7 +54,7 @@ function App() {
               a=>a!=add || !e[2]
           
             )
-        ,e[2]]
+        ,e[2],e[3]]
         )
     
     for(const arr of nData){
@@ -70,7 +70,7 @@ function App() {
         a=>a!=add || !e[2]
         
           )
-      ,e[2]]
+      ,e[2],e[3]]
       )
   
     for(const arr of nData2){
@@ -83,6 +83,10 @@ function App() {
   }
 
   function menPropose(){
+
+
+
+
     // start with each man
 
     const ManDataCopy = ManData.map(e=>(e.map(a=>a)))
@@ -105,10 +109,12 @@ function App() {
 
         // man name
         let name = Man4[0]
+        console.log(name)
         // man preference list
         let list = Man4[1]
         // man's current partner
         let paired = Man4[3]
+        console.log(paired)
 
         let found =  false
         // try proposing to women in the preference list
@@ -121,6 +127,7 @@ function App() {
             SetWomanData(WomanDataCopy)
             break
           }
+
           
           // find the woman he is proposing to
           for(const Woman of WomanDataCopy){
@@ -147,6 +154,7 @@ function App() {
                     }
                   }
                   else {
+                    console.log(finished)
                     finished++
                   }
 
