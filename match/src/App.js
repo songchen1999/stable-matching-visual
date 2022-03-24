@@ -83,27 +83,53 @@ function App() {
   }
 
   function menPropose(){
-    for(let Man4 of ManData){
+    // start with each man
+
+    const ManDataCopy = ManData.map(e=>(e.map(a=>a)))
+
+    const WomanDataCopy = WomanData.map(e=>(e.map(a=>a)))
+
+    for(let Man4 of ManDataCopy){
+      // man name
       let name = Man4[0]
+      // man preference list
       let list = Man4[1]
+      // man's current partner
       let paired = Man4[3]
 
+      let found =  false
+      // try proposing to women in the preference list
       for(let WomanName of list){
 
-        for(const Woman of WomanData){
+        // if found exit
+        if (found){
+
+          SetManData(ManDataCopy)
+          SetWomanData(WomanDataCopy)
+          break
+        }
+        
+        // find the woman he is proposing to
+        for(const Woman of WomanDataCopy){
+          // find the woman
           if (Woman[0]==WomanName){
+            // find out if he is higher in the list than the woman's current partner
             for(let m of Woman[1]){
+              // he is not 
               if(m==Woman[3]){
                 Woman[3] = m
                 break
               }
+              // he is
               else if(m==name){
                 Woman[3] = name
                 paired = WomanName
                 Man4[3] = paired
+                found = true
                 break
               }
             }
+            break
           }
         }
 
