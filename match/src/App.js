@@ -220,9 +220,12 @@ function App() {
       }
 
     }
+    await delay(1000);
+    const nData = ManDataCopy.map(e=>[e[0],e[1],e[2],e[3]])
+    SetManData(nData)
+    const nData2 = WomanDataCopy.map(e=>[e[0],e[1],e[2],e[3]])
+    SetWomanData(nData2)
 
-    SetManData(ManDataCopy)
-    
 
   }
 
