@@ -120,6 +120,8 @@ function App() {
 
     while (finished<ManDataCopy.length){
 
+
+
       console.log("loop")
 
 
@@ -154,13 +156,7 @@ function App() {
         // try proposing to women in the preference list
         for(let WomanName of list){
 
-          // if found exit
-          if (found){
 
-            SetManData(ManDataCopy)
-            SetWomanData(WomanDataCopy)
-            break
-          }
 
           // pause for one second
           await delay(1000);
@@ -210,10 +206,24 @@ function App() {
             }
           }
 
+          // if found exit
+          if (found){
+
+            SetManData(ManDataCopy)
+            SetWomanData(WomanDataCopy)
+            console.log(ManDataCopy,WomanDataCopy)
+            break
+          }
+
         }
 
       }
+
     }
+
+    SetManData(ManDataCopy)
+    
+
   }
 
 
