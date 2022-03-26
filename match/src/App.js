@@ -225,6 +225,8 @@ function App() {
     SetManData(nData)
     const nData2 = WomanDataCopy.map(e=>[e[0],e[1],e[2],e[3]])
     SetWomanData(nData2)
+    SetProposer("")
+    SetProposed("")
 
 
   }
