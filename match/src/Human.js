@@ -4,7 +4,7 @@ export default function Human(props) {
     return (
         <div>
             <div> 
-                <span style={{ backgroundColor: props.name==props.Proposer?'yellow':'transparent'}} onClick={e=>props.clickAdd(props.name)}>{props.name}</span> 
+                <span style={{ backgroundColor: props.name==props.Proposer?'yellow':(props.name==props.Proposed?'blue':'transparent')}} onClick={e=>props.clickAdd(props.name)}>{props.name}</span> 
                 <button onClick={e=>props.addSwitch(props.isMan,props.name)} className='plus'></button> 
                 <span>{props.pair}</span>
             </div>
