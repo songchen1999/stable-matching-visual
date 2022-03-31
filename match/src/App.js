@@ -231,6 +231,189 @@ function App() {
 
   }
 
+  async function womenPropose(){
+
+
+    // check if all partnered
+
+    let c = 0
+    for(const d of WomanData) {
+      if(d[3]!=""){
+        c++
+      }
+    }
+    if(c==WomanData.length){
+      return
+    }
+
+
+    // start with each man
+
+    const ManDataCopy = ManData.map(e=>(e.map(a=>a)))
+
+    const WomanDataCopy = WomanData.map(e=>(e.map(a=>a)))
+
+    let finished = 0
+
+    while (finished<WomanDataCopy.length){
+
+
+
+      console.log("loop")
+
+
+
+      for(let Woman4 of WomanDataCopy){
+
+
+        // continue to next if paired
+        if (Woman4[3]!=""){
+          continue
+        }
+
+        // pause for one second
+        await delay(1000);
+
+        // set the current proposer
+        // remove the proposed from previous propser
+        SetProposer(Woman4[0])
+        SetProposed("")
+
+        // man's current partner
+        let paired = Woman4[3]
+
+        // man name
+        let name = Woman4[0]
+        console.log(name,paired)
+        // man preference list
+        let list = Woman4[1]
+
+
+        let found =  false
+        // try proposing to women in the preference list
+        for(let ManName of list){
+
+
+
+          // pause for one second
+          await delay(1000);
+
+          SetProposed(ManName)
+          console.log(ManName)
+
+          
+          // find the woman he is proposing to
+          for(const Man of ManDataCopy){
+            // find the woman
+            if (Man[0]==ManName){
+              // find out if he is higher in the list than the woman's current partner
+              for(let w of Man[1]){
+                // he is not 
+                if(w==Man[3]){
+                  Man[3] = w
+                  break
+                }
+                // he is
+                else if(w==name){
+                  // the old partner is kicked out
+                  let oldP = Man[3]
+                  // find and remove the old partner's partner
+                  if (oldP!=""){
+                    for (let Woman44 of WomanDataCopy) {
+                      if (Woman44[0] == oldP){
+                        Woman44[3] = ""
+                        break
+                      }
+                    }
+                  }
+                  else {
+                    console.log(finished,oldP)
+                    finished++
+                  }
+
+
+                  Man[3] = name
+                  paired = ManName
+                  Woman4[3] = paired
+                  found = true
+                  break
+                }
+              }
+              break
+            }
+          }
+
+          // if found exit
+          if (found){
+
+            SetManData(ManDataCopy)
+            SetWomanData(WomanDataCopy)
+            console.log(WomanDataCopy,ManDataCopy)
+            break
+          }
+
+        }
+
+      }
+
+    }
+    await delay(1000);
+    const nData = ManDataCopy.map(e=>[e[0],e[1],e[2],e[3]])
+    SetManData(nData)
+    const nData2 = WomanDataCopy.map(e=>[e[0],e[1],e[2],e[3]])
+    SetWomanData(nData2)
+    SetProposer("")
+    SetProposed("")
+
+
+  }
+
+  function random(){
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const nData = ManData.map(
+      e=>[e[0],
+          e[1].map(value => ({ value, sort: Math.random() })).sort((a, b) => a.sort - b.sort).map(({ value }) => value),
+      e[2],
+      ""])
+    SetManData(nData)
+    const nData2 = WomanData.map(
+    e=>[e[0],
+    e[1].map(value => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value),
+    
+    e[2],
+    ""])
+    SetWomanData(nData2)
+    
+
+
+      
+
+
+  }
+
+  function clear(){
+    const nData = ManData.map(
+      e=>[e[0],
+          e[1],
+      e[2],
+      ""])
+    SetManData(nData)
+    const nData2 = WomanData.map(
+    e=>[e[0],
+    e[1],
+    e[2],
+    ""])
+    SetWomanData(nData2)
+  }
+
 
 
   return (
@@ -248,8 +431,12 @@ function App() {
       <div className="bottom">
         <div className="Buttons">
           <button type="button" onClick={e=>{menPropose()}}>Men propose</button>
-          <button type="button">Women propose</button>
-        </div>
+          <button type="button"onClick={e=>{random()}}>Randomize</button>
+          <button type="button"onClick={e=>{clear()}}>Clear</button>
+          <button type="button"onClick={e=>{womenPropose()}}>Women propose</button>
+
+        </
+        div>
 
         <div className='Situation'> {Proposer+" proposes to "+Proposed}</div>
 
