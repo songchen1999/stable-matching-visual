@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import Human from './Human';
 import React, { useState } from 'react';
+import { a } from 'react-spring';
 
 function App() {
 
@@ -31,11 +32,11 @@ function App() {
   // remove a person from a preferList
   function preferClick(isMan,removeFrom,remove){
     if (isMan){
-      const nData = ManData.map(e=>[e[0],e[1].filter((a)=>e[0]!=removeFrom || ( e[0]==removeFrom && a!=remove)),""])
+      const nData = ManData.map(e=>[e[0],e[1].filter((a)=>e[0]!=removeFrom || ( e[0]==removeFrom && a!=remove)),e[2],""])
       SetManData(nData)
     }
     else {
-      const nData = WomanData.map(e=>[e[0],e[1].filter((a)=>e[0]!=removeFrom || ( e[0]==removeFrom && a!=remove)),""])
+      const nData = WomanData.map(e=>[e[0],e[1].filter((a)=>e[0]!=removeFrom || ( e[0]==removeFrom && a!=remove)),e[2],""])
       SetWomanData(nData)
     }
   }
@@ -51,9 +52,9 @@ function App() {
   }
 
   // click at a name and add it to a preference list
-  function clickAdd(add){
-
-    const nData = ManData.map(e=>[e[0]
+  function clickAdd(add,isMan){
+    if(!isMan){
+      const nData = ManData.map(e=>[e[0]
         ,e[1].filter(
 
               a=>a!=add || !e[2]
@@ -62,28 +63,37 @@ function App() {
         ,e[2],""]
         )
     
-    for(const arr of nData){
-      if(arr[2]){
-        arr[1].push(add)
+      for(const arr of nData){
+        if(arr[2]){
+          arr[1].push(add)
+        }
       }
+
+      SetManData(nData)
+
     }
-    SetManData(nData)
-
-    const nData2 = WomanData.map(e=>[e[0]
-      ,e[1].filter(
-
-        a=>a!=add || !e[2]
-        
-          )
-      ,e[2],""]
-      )
+    else{
+      const nData2 = WomanData.map(e=>[e[0]
+        ,e[1].filter(
   
-    for(const arr of nData2){
-      if(arr[2]){
-        arr[1].push(add)
+          a=>a!=add || !e[2]
+          
+            )
+        ,e[2],""]
+        )
+    
+      for(const arr of nData2){
+        if(arr[2]){
+          arr[1].push(add)
+        }
       }
+
+      SetWomanData(nData2)
+
     }
-    SetWomanData(nData2)
+
+
+    
     
   }
 
@@ -106,8 +116,28 @@ function App() {
       }
     }
     if(c==ManData.length){
+      alert("press clear first")
       return
     }
+
+    // check if all have complete
+
+    for(const d of ManData) {
+      if(d[1].length!=ManData.length){
+        alert("Men's list is not complete")
+
+        return
+      }
+    }
+
+    for(const d of WomanData) {
+      if(d[1].length!=ManData.length){
+        alert("Women's list is not complete")
+
+        return
+      }
+    }
+
 
 
     // start with each man
@@ -243,7 +273,28 @@ function App() {
       }
     }
     if(c==WomanData.length){
+      alert("press clear first")
       return
+    }
+
+    
+
+    // check if all have complete
+
+    for(const d of ManData) {
+      if(d[1].length!=ManData.length){
+        alert("Men's list is not complete")
+
+        return
+      }
+    }
+
+    for(const d of WomanData) {
+      if(d[1].length!=ManData.length){
+        alert("Women's list is not complete")
+
+        return
+      }
     }
 
 
@@ -416,15 +467,16 @@ function App() {
 
 
 
+
   return (
     <div className="App">
 
         <div className="Men">
-            {ManData.map(e=>(<Human Proposed={Proposed} Proposer={Proposer} name={e[0]} isMan={true} clickAdd={clickAdd} addSwitch= {startSelectSwitch} listRemoveClick={preferClick} preferences={e[1]} pair={e[3]}/>))}
+            {ManData.map(e=>(<Human Proposed={Proposed} Proposer={Proposer} name={e[0]} isMan={true} clickAdd={clickAdd} addSwitch= {startSelectSwitch} adding={e[2]} listRemoveClick={preferClick} preferences={e[1]} pair={e[3]}/>))}
         </div>
         
         <div className="Women">
-            {WomanData.map(e=>(<Human Proposed={Proposed} Proposer={Proposer} name={e[0]} isMan={false} clickAdd={clickAdd} addSwitch= {startSelectSwitch} listRemoveClick={preferClick} preferences={e[1]} pair={e[3]}/>))}
+            {WomanData.map(e=>(<Human Proposed={Proposed} Proposer={Proposer} name={e[0]} isMan={false} clickAdd={clickAdd} addSwitch= {startSelectSwitch} adding={e[2]} listRemoveClick={preferClick} preferences={e[1]} pair={e[3]}/>))}
         </div>
 
 
@@ -438,7 +490,7 @@ function App() {
         </
         div>
 
-        <div className='Situation'> {Proposer+" proposes to "+Proposed}</div>
+        <div className='Situation'> {Proposer? Proposer+" proposes to "+Proposed : ""}</div>
 
 
       </div>
